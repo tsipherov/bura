@@ -1,0 +1,12 @@
+.searchPanel {
+  margin-right: 10px;
+}
+
+.searchPanel .form-control {
+}
+
+.searchPanel .search-input {
+  font-size: 2rem;
+  width: 100%;
+  flex-grow: 1;
+}
