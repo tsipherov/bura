@@ -4,46 +4,50 @@ import "./ListItem.css";
 export default class ListItem extends Component {
   state = {
     done: false,
-    important: false
+    important: false,
   };
 
   handlerClickOnLabel = () => {
-    this.setState(({done}) => {
-      return { done: !done }
+    this.setState(({ done }) => {
+      return { done: !done };
     });
   };
 
-  handlerImportantSelect = () => { 
+  handlerImportantSelect = () => {
     this.setState(({ important }) => {
-      return { important: !important }
-    })
-  }
+      return { important: !important };
+    });
+  };
 
   render() {
-    const { label } = this.props;
+    const { label, deleteHandler } = this.props;
     let labelClasses = "todo-list-item-label";
     if (this.state.done) {
       labelClasses += " done";
     }
-    if (this.state.important) { 
-      labelClasses += " important"
+    if (this.state.important) {
+      labelClasses += " important";
     }
 
     return (
       <span className="todo-list-item d-flex justify-content-between">
-        <span
-          className={labelClasses}
-          onClick={this.handlerClickOnLabel}
-        >
+        <span className={labelClasses} onClick={this.handlerClickOnLabel}>
           {label}
         </span>
         <div>
-          <button type="button" className="btn btn-outline-success btn-md"
-            onClick={ this.handlerImportantSelect }>
+          <button
+            type="button"
+            className="btn btn-outline-success btn-md"
+            onClick={this.handlerImportantSelect}
+          >
             <i className="fa fa-exclamation" />
           </button>
 
-          <button type="button" className="btn btn-outline-danger btn-md">
+          <button
+            type="button"
+            className="btn btn-outline-danger btn-md"
+            onClick={deleteHandler}
+          >
             <i className="fa fa-trash" />
           </button>
         </div>

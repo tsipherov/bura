@@ -1,13 +1,18 @@
 import React from "react";
 import ListItem from "../listItem/ListItem";
-import './todo-list.css'
+import "./todo-list.css";
 
-const TodoList = ({ data }) => {
+const TodoList = ({ data, deleteHandler }) => {
   let elements = data.map((item) => {
     let { id, ...todos } = item;
     return (
       <li className="list-group-item todoListItem" key={id}>
-        <ListItem {...todos} />
+        <ListItem
+          {...todos}
+          deleteHandler={() => {
+            deleteHandler(id);
+          }}
+        />
       </li>
     );
   });
