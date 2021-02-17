@@ -19,8 +19,16 @@ export default class App extends Component {
   deleteHandler = (id) => {
     let newTodos = this.state.todos.filter((item) => item.id !== id);
     this.setState((prevState) => {
-      console.log("prevState.todos", prevState.todos);
-      console.log("newTodos", newTodos);
+      return {
+        todos: newTodos,
+      };
+    });
+  };
+
+  addHandler = (todo) => {
+    this.setState((prevState) => {
+      let newTodo = { id: todo, label: todo, important: false };
+      let newTodos = [...prevState.todos, newTodo];
       return {
         todos: newTodos,
       };
@@ -40,7 +48,7 @@ export default class App extends Component {
             data={this.state.todos}
             deleteHandler={this.deleteHandler}
           />
-          <AddForm />
+          <AddForm addHandler={this.addHandler} />
         </div>
       </div>
     );

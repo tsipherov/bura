@@ -1,19 +1,33 @@
-import React from 'react'
-import './itemAddForm.css'
+import React, { Component } from "react";
+import "./itemAddForm.css";
 
-const AddForm = () => {
+export default class AddForm extends Component {
+  newTodo = "";
+
+  render() {
     return (
-        <form
-        className="bottom-panel d-flex">
+      <form className="bottom-panel d-flex">
+        <input
+          type="text"
+          className="form-control new-todo-label"
+          placeholder="What needs to be done?"
+          onChange={(e) => {
+            this.newTodo = e.target.value;
+          }}
+        />
 
-        <input type="text"
-               className="form-control new-todo-label"
-               placeholder="What needs to be done?" />
-
-        <button type="submit"
-                className="btn btn-outline-secondary">Add</button>
+        <button
+          type="submit"
+          className="btn btn-outline-secondary"
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.addHandler(this.newTodo);
+            this.newTodo = "";
+          }}
+        >
+          Add
+        </button>
       </form>
-    )
+    );
+  }
 }
-
-export default AddForm

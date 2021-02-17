@@ -4,7 +4,7 @@ import "./ListItem.css";
 export default class ListItem extends Component {
   state = {
     done: false,
-    important: false,
+    important: this.props.important,
   };
 
   handlerClickOnLabel = () => {
