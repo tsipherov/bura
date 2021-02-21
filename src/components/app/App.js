@@ -8,13 +8,24 @@ import StatusFilter from "../statusFilter/statusFilter";
 import TodoList from "../todoList/TodoList";
 
 export default class App extends Component {
+  lastId = 0;
+
   state = {
     todos: [
-      { id: "lkjlkj", label: "Buy something", important: false },
-      { id: "slkij4", label: "Todo something", important: true },
-      { id: "87yjof", label: "Take something", important: false },
+      this.createToDoItem("Buy something"),
+      this.createToDoItem("Todo something"),
+      this.createToDoItem("Take something"),
     ],
   };
+
+  createToDoItem(label) {
+    return {
+      id: this.lastId++,
+      important: false,
+      done: false,
+      label,
+    };
+  }
 
   deleteHandler = (id) => {
     let newTodos = this.state.todos.filter((item) => item.id !== id);
@@ -27,10 +38,24 @@ export default class App extends Component {
 
   addHandler = (todo) => {
     this.setState((prevState) => {
-      let newTodo = { id: todo, label: todo, important: false };
+      let newTodo = this.createToDoItem(todo);
       let newTodos = [...prevState.todos, newTodo];
+      console.log(newTodos);
       return {
         todos: newTodos,
+      };
+    });
+  };
+
+  toggleDone = (id) => {
+    this.setState((prevState) => {
+      return {
+        todos: prevState.todos.map((item) => {
+          if (id === item.id) {
+            item.done = !item.done;
+          }
+          return item;
+        }),
       };
     });
   };
@@ -38,7 +63,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header toDo={1} done={1} />
         <div className="wrapper">
           <div className="d-flex mb-5">
             <SearchPanel />
@@ -47,6 +72,7 @@ export default class App extends Component {
           <TodoList
             data={this.state.todos}
             deleteHandler={this.deleteHandler}
+            toggleDone={this.toggleDone}
           />
           <AddForm addHandler={this.addHandler} />
         </div>

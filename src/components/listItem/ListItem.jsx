@@ -2,17 +2,6 @@ import React, { Component } from "react";
 import "./ListItem.css";
 
 export default class ListItem extends Component {
-  state = {
-    done: false,
-    important: this.props.important,
-  };
-
-  handlerClickOnLabel = () => {
-    this.setState(({ done }) => {
-      return { done: !done };
-    });
-  };
-
   handlerImportantSelect = () => {
     this.setState(({ important }) => {
       return { important: !important };
@@ -20,18 +9,18 @@ export default class ListItem extends Component {
   };
 
   render() {
-    const { label, deleteHandler } = this.props;
+    const { label, deleteHandler, toggleDone, done, important } = this.props;
     let labelClasses = "todo-list-item-label";
-    if (this.state.done) {
+    if (!done) {
       labelClasses += " done";
     }
-    if (this.state.important) {
+    if (important) {
       labelClasses += " important";
     }
 
     return (
       <span className="todo-list-item d-flex justify-content-between">
-        <span className={labelClasses} onClick={this.handlerClickOnLabel}>
+        <span className={labelClasses} onClick={toggleDone}>
           {label}
         </span>
         <div>
