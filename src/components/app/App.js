@@ -40,31 +40,18 @@ export default class App extends Component {
     this.setState((prevState) => {
       let newTodo = this.createToDoItem(todo);
       let newTodos = [...prevState.todos, newTodo];
-      console.log(newTodos);
       return {
         todos: newTodos,
       };
     });
   };
 
-  toggleDone = (id) => {
+  toggleProperty = (id, property) => {
     let newTodos = this.state.todos.map((item) => {
       if (id === item.id) {
-        item.done = !item.done;
-      }
-      return item;
-    });
-    this.setState((prevState) => {
-      return {
-        todos: newTodos,
-      };
-    });
-  };
-
-  toggleImportant = (id) => {
-    let newTodos = this.state.todos.map((item) => {
-      if (id === item.id) {
-        item.important = !item.important;
+        let newItem = { ...item };
+        newItem[property] = !newItem[property];
+        return newItem;
       }
       return item;
     });
@@ -87,8 +74,7 @@ export default class App extends Component {
           <TodoList
             data={this.state.todos}
             deleteHandler={this.deleteHandler}
-            toggleDone={this.toggleDone}
-            toggleImportant={this.toggleImportant}
+            toggleProperty={this.toggleProperty}
           />
           <AddForm addHandler={this.addHandler} />
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import ListItem from "../listItem/ListItem";
 import "./todo-list.css";
 
-const TodoList = ({ data, deleteHandler, toggleDone, toggleImportant }) => {
+const TodoList = ({ data, deleteHandler, toggleProperty }) => {
   let elements = data.map((item) => {
     let { id, ...todos } = item;
     return (
@@ -12,11 +12,8 @@ const TodoList = ({ data, deleteHandler, toggleDone, toggleImportant }) => {
           deleteHandler={() => {
             deleteHandler(id);
           }}
-          toggleDone={() => {
-            toggleDone(id);
-          }}
-          toggleImportant={() => {
-            toggleImportant(id);
+          toggleProperty={(property) => {
+            toggleProperty(id, property);
           }}
         />
       </li>

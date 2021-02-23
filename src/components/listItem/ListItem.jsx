@@ -6,8 +6,7 @@ export default class ListItem extends Component {
     const {
       label,
       deleteHandler,
-      toggleDone,
-      toggleImportant,
+      toggleProperty,
       done,
       important,
     } = this.props;
@@ -21,14 +20,21 @@ export default class ListItem extends Component {
 
     return (
       <span className="todo-list-item d-flex justify-content-between">
-        <span className={labelClasses} onClick={toggleDone}>
+        <span
+          className={labelClasses}
+          onClick={() => {
+            toggleProperty("done");
+          }}
+        >
           {label}
         </span>
         <div>
           <button
             type="button"
             className="btn btn-outline-success btn-md"
-            onClick={toggleImportant}
+            onClick={() => {
+              toggleProperty("important");
+            }}
           >
             <i className="fa fa-exclamation" />
           </button>
