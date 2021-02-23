@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import "./ListItem.css";
 
 export default class ListItem extends Component {
-  handlerImportantSelect = () => {
-    this.setState(({ important }) => {
-      return { important: !important };
-    });
-  };
-
   render() {
-    const { label, deleteHandler, toggleDone, done, important } = this.props;
+    const {
+      label,
+      deleteHandler,
+      toggleDone,
+      toggleImportant,
+      done,
+      important,
+    } = this.props;
     let labelClasses = "todo-list-item-label";
-    if (!done) {
+    if (done) {
       labelClasses += " done";
     }
     if (important) {
@@ -27,7 +28,7 @@ export default class ListItem extends Component {
           <button
             type="button"
             className="btn btn-outline-success btn-md"
-            onClick={this.handlerImportantSelect}
+            onClick={toggleImportant}
           >
             <i className="fa fa-exclamation" />
           </button>

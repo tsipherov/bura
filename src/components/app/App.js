@@ -48,14 +48,29 @@ export default class App extends Component {
   };
 
   toggleDone = (id) => {
+    let newTodos = this.state.todos.map((item) => {
+      if (id === item.id) {
+        item.done = !item.done;
+      }
+      return item;
+    });
     this.setState((prevState) => {
       return {
-        todos: prevState.todos.map((item) => {
-          if (id === item.id) {
-            item.done = !item.done;
-          }
-          return item;
-        }),
+        todos: newTodos,
+      };
+    });
+  };
+
+  toggleImportant = (id) => {
+    let newTodos = this.state.todos.map((item) => {
+      if (id === item.id) {
+        item.important = !item.important;
+      }
+      return item;
+    });
+    this.setState((prevState) => {
+      return {
+        todos: newTodos,
       };
     });
   };
@@ -73,6 +88,7 @@ export default class App extends Component {
             data={this.state.todos}
             deleteHandler={this.deleteHandler}
             toggleDone={this.toggleDone}
+            toggleImportant={this.toggleImportant}
           />
           <AddForm addHandler={this.addHandler} />
         </div>
