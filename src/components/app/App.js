@@ -17,6 +17,7 @@ export default class App extends Component {
       this.createToDoItem("Take something"),
     ],
     term: "",
+    filter: "active",
   };
 
   createToDoItem(label) {
@@ -77,11 +78,26 @@ export default class App extends Component {
     this.setState({ term });
   };
 
+  filter = (todos, filter) => {
+    if (filter === "all") return todos;
+    if (filter === "done") {
+      return todos.filter((item) => item.done);
+    } else {
+      return todos.filter((item) => !item.done);
+    }
+  };
+
+  toggleFilterHandler = (filterData) => {
+    this.setState({
+      filter: filterData,
+    });
+  };
+
   render() {
-    const { todos, term } = this.state;
+    const { todos, term, filter } = this.state;
     let doneItemCounter = this.state.todos.filter((item) => item.done).length;
     let todoCounter = this.state.todos.length - doneItemCounter;
-    let termTodos = this.search(todos, term);
+    let termTodos = this.filter(this.search(todos, term), filter);
 
     return (
       <div className="App">
@@ -89,7 +105,7 @@ export default class App extends Component {
         <div className="wrapper">
           <div className="d-flex mb-5">
             <SearchPanel searchHandler={this.searchHandler} />
-            <StatusFilter />
+            <StatusFilter toggleFilterHandler={this.toggleFilterHandler} />
           </div>
           <TodoList
             data={termTodos}
