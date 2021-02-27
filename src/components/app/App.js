@@ -16,6 +16,7 @@ export default class App extends Component {
       this.createToDoItem("Todo something"),
       this.createToDoItem("Take something"),
     ],
+    term: "",
   };
 
   createToDoItem(label) {
@@ -62,22 +63,36 @@ export default class App extends Component {
     });
   };
 
-  
-  render() {
+  search = (todos, term) => {
+    if (!term) {
+      return todos;
+    }
 
+    return todos.filter((item) => {
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  };
+
+  searchHandler = (term) => {
+    this.setState({ term });
+  };
+
+  render() {
+    const { todos, term } = this.state;
     let doneItemCounter = this.state.todos.filter((item) => item.done).length;
     let todoCounter = this.state.todos.length - doneItemCounter;
-    
+    let termTodos = this.search(todos, term);
+
     return (
       <div className="App">
-        <Header toDo={todoCounter} done={ doneItemCounter } />
+        <Header toDo={todoCounter} done={doneItemCounter} />
         <div className="wrapper">
           <div className="d-flex mb-5">
-            <SearchPanel />
+            <SearchPanel searchHandler={this.searchHandler} />
             <StatusFilter />
           </div>
           <TodoList
-            data={this.state.todos}
+            data={termTodos}
             deleteHandler={this.deleteHandler}
             toggleProperty={this.toggleProperty}
           />
