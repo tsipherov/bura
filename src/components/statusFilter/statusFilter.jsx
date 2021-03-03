@@ -2,36 +2,34 @@ import React, { Component } from "react";
 import "./statusFilter.css";
 
 export default class statusFilter extends Component {
+
+  buttons = [
+    { name: "all", label: "All"},
+    { name: "active", label: "Active"},
+    { name: "done", label: "Done"}
+  ]
+
   render() {
+
+    const buttonsComp = this.buttons.map(({ name, label }) => {
+
+      const isActive = name === this.props.filter
+      const clazz = isActive ? "btn-info" : "btn-outline-secondary"
+
+      return (<button
+        type="button"
+        key={ name }
+        className={`btn ${clazz}`}
+        onClick={() => {
+          this.props.toggleFilterHandler(name);
+        }}
+      >
+        {label}
+      </button>)
+    })
     return (
       <div className="btn-group statusFilter">
-        <button
-          type="button"
-          className="btn btn-info"
-          onClick={() => {
-            this.props.toggleFilterHandler("all");
-          }}
-        >
-          All
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={() => {
-            this.props.toggleFilterHandler("active");
-          }}
-        >
-          Active
-        </button>
-        <button
-          type="button"
-          className="btn btn-outline-secondary"
-          onClick={() => {
-            this.props.toggleFilterHandler("done");
-          }}
-        >
-          Done
-        </button>
+        {buttonsComp}
       </div>
     );
   }

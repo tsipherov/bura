@@ -17,7 +17,7 @@ export default class App extends Component {
       this.createToDoItem("Take something"),
     ],
     term: "",
-    filter: "active",
+    filter: "all",
   };
 
   createToDoItem(label) {
@@ -105,7 +105,8 @@ export default class App extends Component {
         <div className="wrapper">
           <div className="d-flex mb-5">
             <SearchPanel searchHandler={this.searchHandler} />
-            <StatusFilter toggleFilterHandler={this.toggleFilterHandler} />
+            <StatusFilter toggleFilterHandler={this.toggleFilterHandler}
+              filter={ filter }/>
           </div>
           <TodoList
             data={termTodos}
